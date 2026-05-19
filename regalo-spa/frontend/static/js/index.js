@@ -2,8 +2,9 @@ const $display = document.querySelector(".sidebar");
 const $wrapper = document.querySelector("#wrapper");
 const $sidebar = document.querySelector(".sidebar");
 
-const services = [
+const servicesData = [
   {
+    id: "10",
     name: "Salário Maternidade",
     imageSrc: "/static/images/services/salario-maternidade.jpg",
     preview:
@@ -12,6 +13,7 @@ const services = [
     pagePath: "/services/10",
   },
   {
+    id: "9",
     name: "Revisão da Vida Toda",
     imageSrc: "/static/images/services/revisao-vida-toda.jpg",
     preview:
@@ -20,6 +22,7 @@ const services = [
     pagePath: "/services/9",
   },
   {
+    id: "1",
     name: "Aposentadoria",
     imageSrc: "/static/images/services/aposentadoria.jpg",
     preview:
@@ -28,6 +31,7 @@ const services = [
     pagePath: "/services/1",
   },
   {
+    id: "8",
     name: "Revisão de Aposentadoria ou Benefício",
     imageSrc: "/static/images/services/revisao-aposentadoria.jpg",
     preview:
@@ -36,6 +40,7 @@ const services = [
     pagePath: "/services/8",
   },
   {
+    id: "2",
     name: "Auxilio Acidente",
     imageSrc: "/static/images/services/auxilio-acidente.jpg",
     preview:
@@ -44,6 +49,7 @@ const services = [
     pagePath: "/services/2",
   },
   {
+    id: "3",
     name: "Auxilio Doença",
     imageSrc: "/static/images/services/auxilio-doenca.jpg",
     preview:
@@ -52,6 +58,7 @@ const services = [
     pagePath: "/services/3",
   },
   {
+    id: "4",
     name: "Auxilio Idoso",
     imageSrc: "/static/images/services/auxilio-idoso.jpg",
     preview:
@@ -60,6 +67,7 @@ const services = [
     pagePath: "/services/4",
   },
   {
+    id: "5",
     name: "LOAS",
     imageSrc: "/static/images/services/loas.jpg",
     preview:
@@ -68,6 +76,7 @@ const services = [
     pagePath: "/services/5",
   },
   {
+    id: "6",
     name: "Pensão por Morte",
     imageSrc: "/static/images/services/pensao-morte.jpg",
     preview:
@@ -76,6 +85,7 @@ const services = [
     pagePath: "/services/6",
   },
   {
+    id: "7",
     name: "Período Rural",
     imageSrc: "/static/images/services/periodo-rural.jpg",
     preview:
@@ -88,6 +98,7 @@ const services = [
 //side bar
 const menuButton = document.querySelector(".menu-button");
 const closeButton = document.querySelector(".close-button");
+const boxContainer = document.getElementById('box-container');
 
 const showSidebar = () => {
   $display.style.display = "flex";
@@ -104,50 +115,90 @@ const hideSidebar = () => {
 menuButton.addEventListener("click", showSidebar);
 closeButton.addEventListener("click", hideSidebar);
 
-// function that will send variables from services array to the cards and modal html in index.html
-function sendCardsInfo() {
-  let i = 1;
-  do {
-    let idName = "#service-" + i;
-    let service = document.querySelector(idName);
+servicesData.forEach(data => {
+  const cardService = document.createElement('div');
+  cardService.setAttribute('service', data.id);
 
-    //modal
-    let modal = service.querySelector("#modal");
-    let openBtn = service.querySelector(".openModal");
-    let closeBtn = service.querySelector(".closeModal");
+  const cardElem = document.createElement('div');
+  cardElem.classList.add('cards')
 
-    const openModal = () => {
-      modal.showModal();
-      console.log("Modal aberto");
-    };
+  const cardImg = document.createElement('img');
+  cardImg.classList.add('service-image');
+  cardImg.alt = 'image';
+  cardImg.src = data.imageSrc;
 
-    const closeModal = () => {
-      modal.close();
-      console.log("Modal fechado");
-    };
+  const cardContent = document.createElement('div');
+  cardContent.classList.add('card-content');
 
-    openBtn.addEventListener("click", openModal);
-    closeBtn.addEventListener("click", closeModal);
+  const cardServiceName = document.createElement('h3');
+  cardServiceName.classList.add('service-name');
+  cardServiceName.textContent = data.name;
 
-    //cards
-    let serviceName = service.querySelector(".service-name");
-    let serviceImage = service.querySelector(".service-image");
-    let servicePreview = service.querySelector(".service-preview");
-    let modalServiceName = service.querySelector(".modal-service-name");
-    let modalServiceText = service.querySelector(".modal-service-text");
+  const cardServiceP = document.createElement('p');
+  cardServiceP.classList.add('service-preview');
 
-    serviceName.textContent = services[i - 1].name;
-    serviceImage.src = services[i - 1].imageSrc;
-    servicePreview.textContent = services[i - 1].preview;
-    modalServiceName.textContent = services[i - 1].name;
-    modalServiceText.textContent = services[i - 1].text;
+  const cardServiceButton = document.createElement('button');
+  cardServiceButton.classList.add('openModal');
+  cardServiceButton.textContent = "Saiba mais";
 
-    i++;
-  } while (i <= services.length);
-}
+  cardService.appendChild(cardElem);
+  cardElem.appendChild(cardImg);
+  cardElem.appendChild(cardContent);
+  cardContent.appendChild(cardServiceName);
+  cardContent.appendChild(cardServiceP);
+  cardContent.appendChild(cardServiceButton);
+
+  boxContainer.appendChild(cardService);
+});
+
+
+// function that will send data from services array to the cards and modal html in index.html
+// function sendCardsInfo() {
+//   let i = 1;
+//   do {
+//     let idName = "#service-" + i;
+//     let service = document.querySelector(idName);
+
+//     //modal
+//     let modal = service.querySelector("#modal");
+//     let openBtn = service.querySelector(".openModal");
+//     let closeBtn = service.querySelector(".closeModal");
+
+//     const openModal = () => {
+//       modal.showModal();
+//       console.log("Modal aberto");
+//     };
+
+//     const closeModal = () => {
+//       modal.close();
+//       console.log("Modal fechado");
+//     };
+
+//     openBtn.addEventListener("click", openModal);
+//     closeBtn.addEventListener("click", closeModal);
+
+//     //cards
+//     let serviceName = service.querySelector(".service-name");
+//     let serviceImage = service.querySelector(".service-image");
+//     let servicePreview = service.querySelector(".service-preview");
+//     let modalServiceName = service.querySelector(".modal-service-name");
+//     let modalServiceText = service.querySelector(".modal-service-text");
+
+//     serviceName.textContent = servicesData[i - 1].name;
+//     serviceImage.src = servicesData[i - 1].imageSrc;
+//     servicePreview.textContent = servicesData[i - 1].preview;
+//     modalServiceName.textContent = servicesData[i - 1].name;
+//     modalServiceText.textContent = servicesData[i - 1].text;
+
+//     i++;
+//   } while (i <= servicesData.length);
+// }
+
+// boxContainer =+ htmlCardContent;
 
 function getOptionsToContactField() {}
 
 function onClickLink() {}
 
-sendCardsInfo();
+// sendCardsInfo();
+console.log(boxContainer)

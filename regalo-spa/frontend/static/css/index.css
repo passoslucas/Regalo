@@ -50,7 +50,7 @@ body {
   padding-left: 96px;
   padding-right: 96px;
   background: var(--dark);
-  border-bottom: 1px solid #7c7c7c;
+  border-bottom: 1px solid var(--grey);
 }
 
 /* navbar >> items */
